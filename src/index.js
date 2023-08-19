@@ -15,10 +15,14 @@ function renderBreedOptions(breeds) {
 
 function renderCatInfo(cat) {
   catInfo.innerHTML = `
-    <img src="${cat.url}" alt="${cat.breeds[0].name}">
-    <h2>${cat.breeds[0].name}</h2>
-    <p>Description: ${cat.breeds[0].description}</p>
-    <p>Temperament: ${cat.breeds[0].temperament}</p>
+    <div class="cat-details">
+      <img src="${cat.url}" alt="${cat.breeds[0].name}" class="cat-image">
+      <div class="cat-description">
+        <h2>${cat.breeds[0].name}</h2>
+        <p>Description: ${cat.breeds[0].description}</p>
+        <p>Temperament: ${cat.breeds[0].temperament}</p>
+      </div>
+    </div>
   `;
 }
 
@@ -41,11 +45,11 @@ function hideError() {
 
 breedSelect.addEventListener("change", event => {
   const breedId = event.target.value;
-  
+
   showLoader();
   hideError();
-    catInfo.innerHTML = "";
-    
+  catInfo.innerHTML = "";
+
   fetchCatByBreed(breedId)
     .then(cat => {
       renderCatInfo(cat);
@@ -64,12 +68,11 @@ fetchBreeds()
   .then(breeds => {
     renderBreedOptions(breeds);
     hideLoader();
+    new SlimSelect({
+      select: '#breed-select'
+    });
   })
   .catch(error => {
     showError("Error fetching breed list.");
     hideLoader();
   });
-
-  new SlimSelect({
-  select: '#breed-select'
-});
