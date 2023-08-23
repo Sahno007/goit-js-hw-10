@@ -69,7 +69,7 @@ fetchBreeds()
     renderBreedOptions(breeds);
     hideLoader();
     new SlimSelect({
-      select: '#breed-select'
+      select: '.breed-select'
     });
   })
   .catch(error => {
